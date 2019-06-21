@@ -5,7 +5,7 @@ const cors = require('cors');
 
 const { MongoClient } = require('mongodb');
 const MONGODB_URI = 'mongodb://localhost:27017/test';
-const dbName = 'test2';
+const dbName = 'test';
 
 app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(express.json());
@@ -21,10 +21,18 @@ MongoClient.connect(MONGODB_URI, (err, db) =>
 
     const teamUp = db.db(dbName).collection('example');
 
-    app.get('/:filepath', (req, res) =>
+    app.get('/:fileID', (req, res) =>
     {
-      console.log("REQUEST RECEIVED");
-      res.send({ path: "test" });
+      teamUp.findOne({ id: req.params.fileID }, (err, file) =>
+        {
+          if (err) throw new Error("File selection from database failed")
+
+          if (!file) res.status(404).send();
+          else
+          {
+            res.send({ file });
+          }
+        })
     });
 
     app.get('/', (req, res) =>

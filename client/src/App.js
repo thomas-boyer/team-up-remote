@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Home from './Home.js';
+import FileInfo from './FileInfo.js';
 import './App.css';
 
 class App extends Component {
@@ -11,28 +13,16 @@ class App extends Component {
     {
       data: null
     }
-    this.server = "http://localhost:8080"
   }
-
-
-  // makeTestCall = async (e) =>
-  // {
-  //   e.preventDefault();
-  //   const value = e.target[0].value;
-  //   const response = await axios.post(`${this.server}/test`, { value });
-  //   this.setState({ data: response.data.express })
-  // }
 
   //TODO: Insert application path in href tag below!
   render() {
     return (
-      <div className="App">
-        <h1>Team Up!</h1>
-        <div>
-          <a href="" download="teamup.exe">Download</a>
-        </div>
-      </div>
-    );
+      <Router>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/:id" component={FileInfo} />
+      </Router>
+    )
   }
 }
 

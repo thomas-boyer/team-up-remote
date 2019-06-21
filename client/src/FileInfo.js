@@ -37,16 +37,19 @@ class FileInfo extends Component
 
   startUpload = () =>
   {
-    const assignedChunk = this.state.file.chunks.find( (chunk) =>
-      {
-        return chunk.email === this.state.email;
-      });
-
-    if (assignedChunk.amount_uploaded === 0)
+    if (this.state.email)
     {
-      return (
-        <a href="test.html">Start Upload</a>
-      )
+      const assignedChunk = this.state.file.chunks.find( (chunk) =>
+        {
+          return chunk.email === this.state.email;
+        });
+
+      if (assignedChunk.amount_uploaded === 0)
+      {
+        return (
+          <a href="test.html">Start Upload</a>
+        )
+      }
     }
   }
 

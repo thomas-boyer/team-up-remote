@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from './Home.js';
 import FileInfo from './FileInfo.js';
 import './App.css';
@@ -9,10 +9,7 @@ class App extends Component {
   constructor()
   {
     super();
-    this.state =
-    {
-      data: null
-    }
+    this.state = {}
   }
 
   //TODO: Insert application path in href tag below!

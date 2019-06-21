@@ -7,7 +7,7 @@ const Home = () =>
     <div className="App">
       <h1>Team Up!</h1>
       <div>
-        <a href="../../welt.jpg" download="welt.jpg">Download</a>
+        <a href="EXAMPLE.EXE" download="EXAMPLE.EXE">Download</a>
       </div>
     </div>
   )

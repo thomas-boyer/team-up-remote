@@ -8,11 +8,13 @@ class FileInfo extends Component
     super();
     this.state =
     {
+      file: {},
+      fileLoaded: false,
       fileID: route.location.pathname,
-      fileName: null,
-      fileNotFound: false
+      fileNotFound: false,
     };
-    this.server = "http://localhost:8080"
+
+    this.server = "http://localhost:8080";
   }
 
   componentDidMount()
@@ -20,8 +22,7 @@ class FileInfo extends Component
     axios.get(`${this.server}${this.state.fileID}`)
       .then((response) =>
         {
-          console.log(response.data);
-          this.setState({ fileName: response.data.file.file_name });
+          this.setState({ file: response.data, fileLoaded: true })
         })
       .catch((error) =>
         {
@@ -31,10 +32,31 @@ class FileInfo extends Component
 
   render()
   {
+    let chunks;
+
+    if (this.state.fileLoaded)
+    {
+      chunks = this.state.file.chunks.map( (chunk) =>
+        {
+          return (
+            <div key={ chunk.email } >
+              <h3>{ chunk.name }</h3>
+              <h4>{ chunk.email }</h4>
+            </div>
+          )
+        })
+    }
+
+    //TODO: ENTER CORRECT PATHS
     return (
       <div>
-        { this.state.fileNotFound && <h1>404: File Not Found</h1> }
-        <h1>{ this.state.fileName }</h1>
+      { this.state.fileNotFound && <h1>404: File Not Found</h1> }
+
+      { this.state.fileLoaded && <h1>{ this.state.file.file_name }</h1> }
+
+      { this.state.file.done && <a href="../welt.jpg" download={ this.state.file.file_name }>Download</a> }
+
+      { this.state.fileLoaded && !this.state.file.done && chunks }
       </div>
     )
   }

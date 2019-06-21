@@ -30,7 +30,7 @@ MongoClient.connect(MONGODB_URI, (err, db) =>
           if (!file) res.status(404).send();
           else
           {
-            res.send({ file });
+            res.send(JSON.stringify(file));
           }
         })
     });

@@ -1,5 +1,23 @@
-.jumbotron-fluid {
-	color: red;
+nav.jumbotron {
+	background-color: #3C8F6E;
+	color: #fff;
 }
 
+.theNav {
+	margin: 1rem 0rem 1rem 5rem;
+	font-family: 'Montserrat', sans-serif;
+}
 
+.display-4 {
+
+}
+
+.my-4 {
+	color: black;
+}
+
+.btn-lg {
+	display: flex; 
+  justify-content: flex-end;
+  /*flex-direction: row-reverse;*/
+}

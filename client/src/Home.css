@@ -1,15 +1,15 @@
 nav.jumbotron {
-	background-color: #3C8F6E;
+	background-color: #212c35;
 	color: #fff;
 }
 
 .theNav {
 	margin: 1rem 0rem 1rem 5rem;
-	font-family: 'Montserrat', sans-serif;
+	font-family: 'IBM Plex Sans', sans-serif;
 }
 
 .display-4 {
-
+	font-size: 7rem;
 }
 
 .my-4 {

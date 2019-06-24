@@ -1,6 +1,7 @@
 import React from 'react';
 import './Home.css';
 
+//TODO: Replace path below with the real path!
 const Home = () =>
 {
   return (

@@ -30,13 +30,45 @@ class FileInfo extends Component
     if (assignedChunk) this.setState({ email: assignedChunk.email, name: assignedChunk.name });
   }
 
-  calculateProgress = (chunk) =>
+  calculateProgress = (data) =>
   {
-    return { width: `${(chunk.amount_uploaded / chunk.size) * 100}%`}
+    let uploaded;
+    if (data.chunks)
+    {
+      uploaded = 0;
+      data.chunks.forEach( (chunk) =>
+        {
+          uploaded += chunk.amount_uploaded;
+        });
+    }
+    else uploaded = data.amount_uploaded;
+
+    return { width: `${(uploaded / data.size) * 100}%`}
   }
 
-  startUpload = () =>
+  upload = () =>
   {
+    const startUpload = (e) =>
+    {
+      e.preventDefault();
+
+      const formData = new FormData();
+      formData.append(
+        `${this.state.file.id}`,
+        e.target[0].files[0]
+      );
+
+      axios.post(`${this.server}${this.state.fileID}`, formData)
+        .then((response) =>
+          {
+            console.log(response);
+          })
+        .catch((error) =>
+          {
+            //if (error.response.status === 404) this.setState({ fileNotFound: true });
+          });
+    }
+
     if (this.state.email)
     {
       const assignedChunk = this.state.file.chunks.find( (chunk) =>
@@ -47,7 +79,10 @@ class FileInfo extends Component
       if (assignedChunk.amount_uploaded === 0)
       {
         return (
-          <a href="test.html">Start Upload</a>
+          <form onSubmit={ startUpload } encType="multipart/form-data">
+            <input name="chunk" type="file" />
+            <input type="submit" />
+          </form>
         )
       }
     }
@@ -99,7 +134,7 @@ class FileInfo extends Component
         })
     }
 
-    let upload = this.state.fileLoaded && this.startUpload();
+    let upload = this.state.fileLoaded && this.upload();
 
     //TODO: ENTER CORRECT PATHS
     return (
@@ -120,6 +155,9 @@ class FileInfo extends Component
 
         { this.state.fileLoaded && !this.state.file.done && this.state.email && (
           <div>
+            <div className="progress-bar">
+              <div className="progress" style={ this.calculateProgress(this.state.file) }></div>
+            </div>
             <h2>Upload not yet complete</h2>
             { chunks }
             { upload }

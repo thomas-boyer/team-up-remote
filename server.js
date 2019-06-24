@@ -59,7 +59,6 @@ MongoClient.connect(MONGODB_URI, (err, db) =>
 
     app.get('/', (req, res) =>
       {
-        console.log("REQUEST RECEIVED");
         res.send({ path: null });
       });
 

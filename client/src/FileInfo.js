@@ -125,8 +125,8 @@ class FileInfo extends Component
               <div key={ chunk.email } >
                 <h3>{ chunk.name }</h3>
                 <h4>{ chunk.email }</h4>
-                <div className="progress-bar">
-                  <div className="progress" style={this.calculateProgress(chunk)}></div>
+                <div className="progress">
+                  <div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style={this.calculateProgress(chunk)}></div>
                 </div>
               </div>
             )
@@ -155,8 +155,8 @@ class FileInfo extends Component
 
         { this.state.fileLoaded && !this.state.file.done && this.state.email && (
           <div>
-            <div className="progress-bar">
-              <div className="progress" style={ this.calculateProgress(this.state.file) }></div>
+            <div className="progress">
+              <div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style={ this.calculateProgress(this.state.file) }></div>
             </div>
             <h2>Upload not yet complete</h2>
             { chunks }

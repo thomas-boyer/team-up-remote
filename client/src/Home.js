@@ -16,6 +16,7 @@ const Home = () =>
 	      </p>
 	      	<div><hr className="my-4"></hr></div>
 	      <p>A blahablah app that does neat thing take your files and go places feel good wow hooray</p>
+          <img src="code-background.jpg" className="img-fluid" alt="Responsive image" />
         <a type="button" className="btn p-2 bd-highlight btn-primary btn-lg " href="" download="teamup.exe" >		
         	Download
         </a>
@@ -26,13 +27,13 @@ const Home = () =>
      <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
         <div className="carousel-inner">
           <div className="carousel-item active">
-            <img src="../public/images/code-background.jpg" className="d-block w-100" alt="..." />
+            <img src="code-background.jpg" className="d-block w-100" alt="..." />
           </div>
           <div className="carousel-item">
-            <img src="..." className="d-block w-100" alt="..." />
+            <img src="code-background.jpg" className="d-block w-100" alt="..." />
           </div>
           <div className="carousel-item">
-            <img src="..." className="d-block w-100" alt="..." />
+            <img src="code-background.jpg" className="d-block w-100" alt="..." />
           </div>
         </div>
         <a className="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">

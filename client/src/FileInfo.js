@@ -137,23 +137,35 @@ class FileInfo extends Component
     let upload = this.state.fileLoaded && this.upload();
 
     //TODO: ENTER CORRECT PATHS
-    return (
+     return (
+    <div>
+      { this.state.fileNotFound && <h1>404: File Not Found</h1> }
+      { this.state.fileLoaded && !this.state.email && (
       <div>
-        { this.state.fileNotFound && <h1>404: File Not Found</h1> }
-
-        { this.state.fileLoaded && !this.state.email && (
-          <div>
+        <nav class="navbar navbar-light bg-light">
+          <a class="navbar-brand" href="#">
+            <img src="/docs/4.3/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="" />
             <h1>Please enter your email.</h1>
-            <form onSubmit={ this.validateEmail }>
-              <input type="email" name="email" />
-              <input type="submit" />
-            </form>
+          </a>
+        </nav>
+
+       <div>
+        <form onSubmit={ this.validateEmail }>
+          <div className="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
+            <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
           </div>
-        )}
+          <button type="submit" className="btn btn-primary">Submit</button>
+        </form>
+      </div>
 
-        { this.state.fileLoaded && this.state.email && <h1>{ this.state.file.file_name }</h1> }
+      </div>
+      )}
 
-        { this.state.fileLoaded && !this.state.file.done && this.state.email && (
+            { this.state.fileLoaded && this.state.email && <h1>{ this.state.file.file_name }</h1> }
+
+            { this.state.fileLoaded && !this.state.file.done && this.state.email && (
           <div>
             <div className="progress">
               <div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style={ this.calculateProgress(this.state.file) }></div>

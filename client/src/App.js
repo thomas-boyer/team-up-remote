@@ -9,7 +9,7 @@ class App extends Component {
   constructor()
   {
     super();
-    this.state = {}
+    this.state = {};
   }
 
   //TODO: Insert application path in href tag below!

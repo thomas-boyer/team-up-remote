@@ -13,9 +13,11 @@ class FileInfo extends Component
       fileLoaded: false,
       fileID: route.location.pathname,
       fileNotFound: false,
+      done: false
     };
 
     this.server = "http://localhost:8080";
+    this.socket = new WebSocket('ws://localhost:8080');
   }
 
   validateEmail = (e) =>
@@ -27,7 +29,11 @@ class FileInfo extends Component
         return chunk.email === e.target[0].value;
       });
 
-    if (assignedChunk) this.setState({ email: assignedChunk.email, name: assignedChunk.name });
+    if (assignedChunk)
+    {
+      this.setState({ email: assignedChunk.email, name: assignedChunk.name });
+      this.socket.send(JSON.stringify({ setFile: this.state.file.id }));
+    }
   }
 
   calculateProgress = (data) =>
@@ -48,33 +54,46 @@ class FileInfo extends Component
 
   upload = () =>
   {
-    const startUpload = (e) =>
-    {
-      e.preventDefault();
-
-      const formData = new FormData();
-      formData.append(
-        `${this.state.file.id}`,
-        e.target[0].files[0]
-      );
-
-      axios.post(`${this.server}${this.state.fileID}`, formData)
-        .then((response) =>
-          {
-            console.log(response);
-          })
-        .catch((error) =>
-          {
-            //if (error.response.status === 404) this.setState({ fileNotFound: true });
-          });
-    }
-
     if (this.state.email)
     {
       const assignedChunk = this.state.file.chunks.find( (chunk) =>
         {
           return chunk.email === this.state.email;
         });
+      const chunkIndex = this.state.file.chunks.indexOf(assignedChunk);
+
+      const startUpload = (e) =>
+      {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append(
+          `${this.state.file.id}`,
+          e.target[0].files[0]
+        );
+
+        formData.append(
+          "email",
+          this.state.email
+        );
+        formData.email = this.state.email;
+
+        const postConfig =
+        {
+          onUploadProgress: (progressEvent) =>
+          {
+            this.socket.send(JSON.stringify(
+              {
+                id: this.state.file.id,
+                email: this.state.email,
+                uploaded: progressEvent.loaded
+              }
+            ));
+          }
+        };
+
+        axios.post(`${this.server}${this.state.fileID}`, formData, postConfig);
+      }
 
       if (assignedChunk.amount_uploaded === 0)
       {
@@ -94,11 +113,40 @@ class FileInfo extends Component
       .then((response) =>
         {
           this.setState({ file: response.data, fileLoaded: true })
+
+          console.log(this.state.file.chunks);
+
+          if (this.state.file.chunks.every( (chunk) => { return chunk.done }))
+          {
+            this.setState({ done: true });
+          }
         })
       .catch((error) =>
         {
           if (error.response.status === 404) this.setState({ fileNotFound: true });
         });
+
+      const ws = this.socket;
+
+    //On receiving a message, parse it and add it to the state
+    ws.onmessage = (event) =>
+    {
+      const messageObj = JSON.parse(event.data);
+
+      //If the message specifies a new number of users, update the state appropriately
+      if (messageObj.uploaded)
+      {
+        const chunkIndex = this.state.file.chunks.findIndex( (chunk) =>
+          { return chunk.email === messageObj.email }
+        );
+
+        const file = this.state.file;
+        file.chunks[chunkIndex].amount_uploaded = messageObj.uploaded;
+
+        this.setState({ file });
+      }
+    };
+
   }
 
   render()
@@ -131,15 +179,16 @@ class FileInfo extends Component
               </div>
             )
           }
-        })
+        });
     }
 
     let upload = this.state.fileLoaded && this.upload();
 
     //TODO: ENTER CORRECT PATHS
+    //{ this.state.fileNotFound && <h1>404: File Not Found</h1> }
     return (
       <div>
-        { this.state.fileNotFound && <h1>404: File Not Found</h1> }
+
 
         { this.state.fileLoaded && !this.state.email && (
           <div>
@@ -153,7 +202,7 @@ class FileInfo extends Component
 
         { this.state.fileLoaded && this.state.email && <h1>{ this.state.file.file_name }</h1> }
 
-        { this.state.fileLoaded && !this.state.file.done && this.state.email && (
+        { this.state.fileLoaded && !this.state.done && this.state.email && (
           <div>
             <div className="progress">
               <div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style={ this.calculateProgress(this.state.file) }></div>
@@ -164,7 +213,7 @@ class FileInfo extends Component
           </div>
         )}
 
-        { this.state.file.done && <a href="THE_FILE.exe" download={ this.state.file.file_name }>Download</a> }
+        { this.state.email && this.state.done && <a href={ `./files${this.state.fileID}/${this.state.file.file_name}` } download={ this.state.file.file_name }>Download</a> }
       </div>
     )
   }

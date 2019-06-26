@@ -115,12 +115,16 @@ MongoClient.connect(MONGODB_URI, (err, db) =>
 
       app.post('/', (req, res) =>
         {
+          const chunkArray = JSON.parse(req.body.chunks);
+          const file = req.body;
+          file.chunks = chunkArray;
+
           mkdirp(`./files/${req.body.id}`, function (err)
             {
               if (err) console.error(err);
             });
 
-          teamUp.insertOne(req.body);
+          teamUp.insertOne(file);
         });
 
       app.get('/', (req, res) =>

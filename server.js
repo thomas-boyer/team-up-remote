@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8081;
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
+const mkdirp = require('mkdirp');
 
 app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(express.json());
@@ -71,6 +72,11 @@ MongoClient.connect(MONGODB_URI, (err, db) =>
         });
       });
 
+      app.get('/:fileID/download/:fileName', (req, res) =>
+        {
+          res.sendFile(`${req.params.fileID}/${req.params.fileName}`, { root: 'files' });
+        });
+
       app.post('/:fileID', (req, res) =>
         {
           const path = Object.keys(req.files)[0];
@@ -93,7 +99,6 @@ MongoClient.connect(MONGODB_URI, (err, db) =>
             });
         });
 
-      //TODO: Serve static directory for uploaded file
       app.get('/:fileID', (req, res) =>
         {
           teamUp.findOne({ id: req.params.fileID }, (err, file) =>
@@ -110,8 +115,12 @@ MongoClient.connect(MONGODB_URI, (err, db) =>
 
       app.post('/', (req, res) =>
         {
-          //TODO: Create directory in ./files for new file
-          //TODO: Insert relevant information into database
+          mkdirp(req.body.id, function (err)
+            {
+              if (err) console.error(err);
+            });
+
+          teamUp.insertOne(req.body);
         });
 
       app.get('/', (req, res) =>

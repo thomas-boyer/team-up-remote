@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import FileDownload from 'js-file-download';
 
 class FileInfo extends Component
 {
@@ -8,7 +9,7 @@ class FileInfo extends Component
     super();
     this.state =
     {
-      email: "",
+      email: '',
       file: {},
       fileLoaded: false,
       fileID: route.location.pathname,
@@ -16,8 +17,8 @@ class FileInfo extends Component
       done: false
     };
 
-    this.server = "http://localhost:8080";
-    this.socket = new WebSocket('ws://localhost:8080');
+    this.server = 'http://localhost:8081';
+    this.socket = new WebSocket('ws://localhost:8081');
   }
 
   validateEmail = (e) =>
@@ -73,7 +74,7 @@ class FileInfo extends Component
         );
 
         formData.append(
-          "email",
+          'email',
           this.state.email
         );
         formData.email = this.state.email;
@@ -105,6 +106,18 @@ class FileInfo extends Component
         )
       }
     }
+  }
+
+  download = () =>
+  {
+    axios.get(`${this.server}${this.state.fileID}/download/${this.state.file.file_name}`,
+      {
+        responseType: 'arraybuffer'
+      })
+      .then((response) =>
+        {
+          FileDownload(response.data, `${this.state.file.file_name}`);
+        });
   }
 
   componentDidMount()
@@ -213,7 +226,7 @@ class FileInfo extends Component
           </div>
         )}
 
-        { this.state.email && this.state.done && <a href={ `./files${this.state.fileID}/${this.state.file.file_name}` } download={ this.state.file.file_name }>Download</a> }
+        { this.state.email && this.state.done && <button onClick={ this.download }>Download File</button> }
       </div>
     )
   }

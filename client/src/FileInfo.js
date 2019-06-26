@@ -139,7 +139,7 @@ class FileInfo extends Component
           if (error.response.status === 404) this.setState({ fileNotFound: true });
         });
 
-      const ws = this.socket;
+    const ws = this.socket;
 
     //On receiving a message, parse it and add it to the state
     ws.onmessage = (event) =>

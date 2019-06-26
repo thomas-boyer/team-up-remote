@@ -115,7 +115,7 @@ MongoClient.connect(MONGODB_URI, (err, db) =>
 
       app.post('/', (req, res) =>
         {
-          mkdirp(req.body.id, function (err)
+          mkdirp(`./files/${req.body.id}`, function (err)
             {
               if (err) console.error(err);
             });

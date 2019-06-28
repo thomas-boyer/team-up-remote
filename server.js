@@ -168,4 +168,11 @@ MongoClient.connect(MONGODB_URI, (err, db) =>
 
           teamUp.insertOne(file);
         });
+
+      app.get('*', (req, res) => {
+        res.send('fallback');
   });
+
+
+
+      

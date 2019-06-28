@@ -1,24 +1,30 @@
-const express = require('express');
-const app = express();
 const PORT = process.env.PORT || 8081;
+
+//Import dependencies
+const express = require('express');
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
 const mkdirp = require('mkdirp');
 
+//Use middleware
+const app = express();
 app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(fileUpload());
 
+//Configure database
 const { MongoClient } = require('mongodb');
 const MONGODB_URI = 'mongodb://localhost:27017/test';
 const dbName = 'test';
 
+//Configure sockets
 const SocketServer = require('ws').Server;
 const wss = new SocketServer({ server: app.listen(
   PORT, '0.0.0.0', 'localhost', () => console.log(`Listening on ${ PORT }`)
 ) });
 
+//Connect to database before doing anything else
 MongoClient.connect(MONGODB_URI, (err, db) =>
   {
     if (err)
@@ -26,8 +32,10 @@ MongoClient.connect(MONGODB_URI, (err, db) =>
       console.error(`Failed to connect: ${MONGODB_URI}`);
       throw err;
     }
+    //Use in a consistent collection in database
     const teamUp = db.db(dbName).collection('example');
 
+    //Socket operations are handled separately from requests
     wss.on('connection', (ws) =>
       {
         console.log("User connected");
@@ -37,17 +45,21 @@ MongoClient.connect(MONGODB_URI, (err, db) =>
         {
           const dataObj = JSON.parse(data);
 
+          //Assigns a file to a socket when user validates their email
           if (dataObj.setFile)
           {
             ws.files.push(dataObj.setFile);
           }
+          //Updates database and sends back information on uploads for progress bars
           else if (dataObj.uploaded)
           {
+            //Find appropriate file in database and find chunk corresponding to user
             teamUp.findOne({ id: dataObj.id }, (err, file) =>
               {
                 const chunk = file.chunks.find( chunk =>
                   { return chunk.email === dataObj.email })
 
+                //Update database with current amount uploaded by user
                 const uploaded = dataObj.uploaded;
                 const chunkIndex = file.chunks.indexOf(chunk);
                 const newValue = { $set: { [`chunks.${chunkIndex}.amount_uploaded`] : uploaded } };
@@ -55,6 +67,7 @@ MongoClient.connect(MONGODB_URI, (err, db) =>
                 teamUp.updateOne({ id: dataObj.id }, newValue);
               });
 
+            //Broadcast new upload amounts to users assigned to the file
             wss.clients.forEach( (client) =>
               {
                 if (client.files.includes(dataObj.id))
@@ -72,33 +85,60 @@ MongoClient.connect(MONGODB_URI, (err, db) =>
         });
       });
 
+      //Sends file to user after it is completed
       app.get('/:fileID/download/:fileName', (req, res) =>
         {
-          res.sendFile(`${req.params.fileID}/${req.params.fileName}`, { root: 'files' });
+          res.download(`files/${req.params.fileID}/${req.params.fileName}`);
         });
 
+      //Handles chunk uploads
       app.post('/:fileID', (req, res) =>
         {
+          //Get path from key representing file
           const path = Object.keys(req.files)[0];
+
           const email = req.body.email;
           const chunk = req.files[path];
 
-          chunk.mv(`./client/public/files/${path}/${chunk.name}`, function(err) {
+          //Move chunk to appropriate directory (which is created in '/' post handler)
+          chunk.mv(`./files/${path}/${chunk.name}`, (err) =>
+            {
+              if (err) console.log(err);
+              else
+              {
+                let response = {};
 
-              if (err) res.send(err);
+                //After moving, tell database and user that chunk is finished
+                teamUp.findOne({ id: path }, (err, file) =>
+                  {
+                    const chunkIndex = file.chunks.findIndex( (chunk) => { return chunk.email === email });
+                    let newValue = { $set: { [`chunks.${chunkIndex}.done`] : true } };
 
-              teamUp.findOne({ id: path }, (err, file) =>
-                {
-                  const chunkIndex = file.chunks.findIndex( (chunk) => { return chunk.email === email });
-                  const newValue = { $set: { [`chunks.${chunkIndex}.done`] : true } };
+                    teamUp.updateOne({ id: path }, newValue, () =>
+                      {
+                        response.chunkDone = true;
+                        file.chunks[chunkIndex].done = true;
+                        console.log(file.chunks);
 
-                  teamUp.updateOne({ id: path }, newValue);
-                });
+                        //After marking chunk as done, check if every chunk is done
+                        if (file.chunks.every( (chunk) => { return chunk.done }))
+                        {
+                          //If so, mark file as done
+                          newValue = { $set: { ["done"] : true } };
+                          teamUp.updateOne({ id: path }, newValue);
 
-              res.send(JSON.stringify({ "done": true }));
-            });
+                          response.fileDone = true;
+                        }
+
+                        //Send response indicating if chunk and/or file are finished
+                        res.send(JSON.stringify(response));
+                      });
+                  });
+              }
+          });
         });
 
+      //Send file information to client
       app.get('/:fileID', (req, res) =>
         {
           teamUp.findOne({ id: req.params.fileID }, (err, file) =>
@@ -113,22 +153,19 @@ MongoClient.connect(MONGODB_URI, (err, db) =>
             })
         });
 
+      //Create new file entry in database
       app.post('/', (req, res) =>
         {
           const chunkArray = JSON.parse(req.body.chunks);
           const file = req.body;
           file.chunks = chunkArray;
 
+          //Make corresponding directory in ./files folder
           mkdirp(`./files/${req.body.id}`, function (err)
             {
               if (err) console.error(err);
             });
 
           teamUp.insertOne(file);
-        });
-
-      app.get('/', (req, res) =>
-        {
-          res.send({ path: null });
         });
   });

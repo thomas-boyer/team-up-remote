@@ -1,0 +1,73 @@
+#root {
+  background-color: #fffdf8;
+  font-family: 'Raleway', sans-serif;
+}
+
+h1 {
+  font-weight: 800;
+}
+
+.email-form {
+  padding: 35vh 20%;
+  text-align: center;
+  color: black;
+  font-family: 'Raleway', sans-serif;
+}
+
+.email-form h1 {
+  margin-bottom: 20px;
+}
+
+.email-form form {
+  display: flex;
+  justify-content: center;
+  font-weight: 800;
+}
+
+.email-form input {
+  background-color: #fffdf8;
+  border: 2px solid black;
+  color: black;
+  font-family: 'Raleway', sans-serif;
+}
+
+.email-form input[type="email"] {
+  height: 40px;
+  width: 72%;
+  padding: 10px;
+  margin-right: 10px;
+}
+
+.email-form input[type="submit"] {
+  height: 40px;
+  width: 20%;
+}
+
+.email-form input[type="submit"]:hover {
+  background-color: #eedbaa;
+  cursor: pointer;
+}
+
+.file-info {
+  margin: 0 7%;
+}
+
+.file-info h1 {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.file-info h2 {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.chunk {
+  margin-bottom: 5px;
+  padding: 3px;
+  box-shadow: 8px 8px 8px #aaa;
+}
+
+.chunk:last-child {
+  border-bottom: none;
+}

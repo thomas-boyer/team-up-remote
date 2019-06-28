@@ -1,5 +1,4 @@
 import React from 'react';
-import './Home.css';
 
 //TODO: Replace path below with the real path!
 const Home = () =>
@@ -16,11 +15,11 @@ const Home = () =>
 	      </p>
 	      	<div><hr className="my-4"></hr></div>
 	      <p>A blahablah app that does neat thing take your files and go places feel good wow hooray</p>
-        <a type="button" className="btn p-2 bd-highlight btn-primary btn-lg " href="" download="teamup.exe" >		
+        <a type="button" className="btn p-2 bd-highlight btn-primary btn-lg " href="" download="teamup.exe" >
         	Download
         </a>
       </div>
-    	</nav>  	
+    	</nav>
     </div>
 
      <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
@@ -45,8 +44,8 @@ const Home = () =>
         </a>
       </div>
 </div>
-    
-    
+
+
   )
 }
 

@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from './Home.js';
-import FileInfo from './FileInfo.js';
-import axios from 'axios';
-import './App.css';
+import File from './File.js';
 
 class App extends Component {
 
@@ -17,8 +15,8 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/:id" component={FileInfo} />
+        <Route exact path="/" component={ Home } />
+        <Route exact path="/:id" component={ File } />
       </Router>
     )
   }

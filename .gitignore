@@ -17,3 +17,6 @@
 /client/yarn-error.log*
 
 /files/*
+
+run.sh
+/client/public/.htaccess

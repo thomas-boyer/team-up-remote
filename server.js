@@ -5,11 +5,13 @@ const express = require('express');
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
 const mkdirp = require('mkdirp');
+const path = require('path');
+const splitFile = require('split-file');
 
 //Use middleware
 const app = express();
 app.use(cors({ origin: 'http://localhost:3000' }));
-app.use(express.json());
+app.use(express.json({ limit: '100gb' }));
 app.use(express.urlencoded({ extended: false }));
 app.use(fileUpload());
 
@@ -23,6 +25,8 @@ const SocketServer = require('ws').Server;
 const wss = new SocketServer({ server: app.listen(
   PORT, '0.0.0.0', 'localhost', () => console.log(`Listening on ${ PORT }`)
 ) });
+
+app.use(express.static(path.join(__dirname, 'client', 'build')));
 
 //Connect to database before doing anything else
 MongoClient.connect(MONGODB_URI, (err, db) =>
@@ -118,11 +122,20 @@ MongoClient.connect(MONGODB_URI, (err, db) =>
                       {
                         response.chunkDone = true;
                         file.chunks[chunkIndex].done = true;
-                        console.log(file.chunks);
 
                         //After marking chunk as done, check if every chunk is done
                         if (file.chunks.every( (chunk) => { return chunk.done }))
                         {
+                          const paths = file.chunks.map( (chunk) => { return chunk.path });
+
+                          splitFile.mergeFiles(paths, __dirname + `/files/${file.id}/${file.file_name}`)
+                            .then(() => {
+                              console.log('Done!');
+                            })
+                            .catch((err) => {
+                              console.log('Error: ', err);
+                            });
+
                           //If so, mark file as done
                           newValue = { $set: { ["done"] : true } };
                           teamUp.updateOne({ id: path }, newValue);
@@ -139,7 +152,7 @@ MongoClient.connect(MONGODB_URI, (err, db) =>
         });
 
       //Send file information to client
-      app.get('/:fileID', (req, res) =>
+      app.get('/:fileID/details', (req, res) =>
         {
           teamUp.findOne({ id: req.params.fileID }, (err, file) =>
             {
@@ -168,4 +181,9 @@ MongoClient.connect(MONGODB_URI, (err, db) =>
 
           teamUp.insertOne(file);
         });
+
+      app.get('*', (req, res) =>
+        {
+          res.sendFile('build/index.html', { root: 'client' });
+        })
   });

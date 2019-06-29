@@ -22,7 +22,7 @@ class File extends Component
       fileNotFound: false,
     };
 
-    this.SOCKET = new WebSocket(process.env.REACT_APP_SOCKET_URL);
+    this.SOCKET = new WebSocket('ws://localhost:8081');
   }
 
   updateState = (stateChange) =>

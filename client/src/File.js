@@ -22,6 +22,8 @@ class File extends Component
       fileNotFound: false,
     };
 
+
+    //IRL: this.Socket = new WebSocket(process.env.REACT_APP_SOCKET_URL);
     this.SOCKET = new WebSocket('ws://localhost:8081');
   }
 
@@ -33,7 +35,7 @@ class File extends Component
   componentDidMount()
   {
     //On website load, get file data from database
-    axios.get(`${process.env.REACT_APP_SERVER_URL}${this.state.fileID}`)
+    axios.get(`http://localhost:8081${this.state.fileID}/details`)
       .then((response) =>
         {
           this.setState({ file: response.data, fileLoaded: true });

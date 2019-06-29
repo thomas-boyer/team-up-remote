@@ -4,47 +4,33 @@ import React from 'react';
 const Home = () =>
 {
   return (
-
 <div>
-    <div>
-    	<nav className="jumbotron">
-    	<div className="theNav">
-	      <h1 className="display-4">Team Up!</h1>
-	      <p className="lead">
-	      	Get files <i>faster</i>
-	      </p>
-	      	<div><hr className="my-4"></hr></div>
-	      <p>A blahablah app that does neat thing take your files and go places feel good wow hooray</p>
-        <a type="button" className="btn p-2 bd-highlight btn-primary btn-lg " href="" download="teamup.exe" >
-        	Download
-        </a>
-      </div>
-    	</nav>
-    </div>
+  <div>
 
-     <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
-        <div className="carousel-inner">
-          <div className="carousel-item active">
-            <img src="../public/images/code-background.jpg" className="d-block w-100" alt="..." />
-          </div>
-          <div className="carousel-item">
-            <img src="..." className="d-block w-100" alt="..." />
-          </div>
-          <div className="carousel-item">
-            <img src="..." className="d-block w-100" alt="..." />
-          </div>
-        </div>
-        <a className="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span className="sr-only">Previous</span>
-        </a>
-        <a className="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-          <span className="carousel-control-next-icon" aria-hidden="true"></span>
-          <span className="sr-only">Next</span>
-        </a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Team Up</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Upload</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Download</a>
+          </li>
+        </ul>
       </div>
+    </nav>
+
+  </div>
+
+  <div><a type="button" href="" download="teamup.exe">Download</a></div>
 </div>
-
 
   )
 }

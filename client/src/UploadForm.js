@@ -37,7 +37,7 @@ const UploadForm = ({ file, email, socket, updateFile }) =>
     };
 
     //Upload chunk
-    axios.post(`http://172.105.10.189/${file.id}`, formData, postConfig)
+    axios.post(`http://localhost:8081/${file.id}`, formData, postConfig)
       .then( (response) =>
       {
         //If the chunk finishes successfully, update state accordingly

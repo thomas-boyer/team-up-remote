@@ -1,10 +1,10 @@
 #root {
-  background-color: #fffdf8;
   font-family: 'Raleway', sans-serif; }
 
-h1 {
-  font-weight: 800; }
-
+/*h1 {
+	font-weight: 800;
+}*/
+/*please enter email page*/
 .email-form {
   padding: 35vh 20%;
   text-align: center;
@@ -21,7 +21,6 @@ h1 {
     justify-content: center;
     font-weight: 800; }
   .email-form input {
-    background-color: #fffdf8;
     border: 2px solid black;
     color: black;
     font-family: 'Raleway', sans-serif; }
@@ -53,3 +52,13 @@ h1 {
   box-shadow: 8px 8px 8px #aaa; }
   .chunk:last-child {
     border-bottom: none; }
+
+.nav {
+  background-color: #e1e3e6;
+  padding: 1rem;
+  color: black; }
+  .nav .nav-link.active {
+    font-size: 1.3rem; }
+
+.home {
+  background-image: url("./images/code-background.jpg"); }

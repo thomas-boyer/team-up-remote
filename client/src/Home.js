@@ -27,7 +27,10 @@ const Home = () =>
   </nav>
   </div>
 
-  <div><a type="button" href="" download="teamup.exe">Download</a></div>
+  <div className="home-download">
+    <h3>Download files <i>faster</i></h3>
+    <a className="download"type="submit" href="" download="teamup.exe">Download</a>
+  </div>
 
 </div>
 

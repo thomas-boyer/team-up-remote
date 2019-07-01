@@ -36,6 +36,7 @@
     background-color: #eedbaa;
     cursor: pointer; }
 
+/*==============================*/
 .file-info {
   margin: 0 7%; }
   .file-info h1 {
@@ -52,6 +53,15 @@
   box-shadow: 8px 8px 8px #aaa; }
   .chunk:last-child {
     border-bottom: none; }
+
+/*home page*/
+.home-download {
+  padding: 35vh 20%;
+  text-align: center;
+  color: black;
+  font-family: 'Raleway', sans-serif;
+  height: 40px;
+  width: 20%; }
 
 .nav {
   background-color: #e1e3e6;

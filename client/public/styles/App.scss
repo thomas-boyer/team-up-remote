@@ -42,6 +42,8 @@
 	}
 }
 
+/*==============================*/
+
 
 .file-info {
 	margin: 0 7%;
@@ -63,6 +65,18 @@
 	&:last-child {
 		border-bottom: none;
 	}
+}
+
+
+/*home page*/
+
+.home-download{
+	padding: 35vh 20%;
+	text-align: center;
+	color: black;
+	font-family: 'Raleway', sans-serif;
+	height: 40px;
+	width: 20%;
 }
 
 

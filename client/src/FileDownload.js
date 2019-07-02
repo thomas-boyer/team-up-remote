@@ -9,7 +9,7 @@ const FileDownload = ({ file }) =>
   {
     //Set Response Type header to arraybuffer (instead of blob default)
     //in order to avoid downloaded data being mutated
-    axios.get(`http://localhost:8081/${file.id}/download/${file.file_name}`,
+    axios.get(`http://172.105.10.189/${file.id}/download/${file.file_name}`,
       {
         responseType: 'arraybuffer'
       })

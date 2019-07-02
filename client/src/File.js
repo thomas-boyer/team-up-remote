@@ -17,13 +17,12 @@ class File extends Component
       email: '',
       file: {},
       fileLoaded: false,
-      //fileID begins with a slash: eg, "/qwerty"
-      fileID: route.location.pathname,
+      //filePath begins with a slash: eg, "/qwerty"
+      filePath: route.location.pathname,
       fileNotFound: false,
     };
 
-    //IRL: this.Socket = new WebSocket(process.env.REACT_APP_SOCKET_URL);
-    this.SOCKET = new WebSocket('ws://localhost:8081');
+    this.SOCKET = new WebSocket('ws://172.105.10.189');
   }
 
   updateState = (stateChange) =>
@@ -34,7 +33,7 @@ class File extends Component
   componentDidMount()
   {
     //On website load, get file data from database
-    axios.get(`http://localhost:8081${this.state.fileID}/details`)
+    axios.get(`http://172.105.10.189${this.state.filePath}/details`)
       .then((response) =>
         {
           this.setState({ file: response.data, fileLoaded: true });

@@ -53,17 +53,27 @@ h1 {
 
 /*==============================*/
 
-
+.wrap {
+	height: 100vh;
+  width: 100%;
+  color: #ffffff;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url(../images/background.jpg);
+}
 .file-info {
-	
-	margin: 0 7%;
+
+  margin: 0 5%;
 	h1 {
 		text-align: center;
 		margin: 10px 0;
+		color: black;
 	}
 	h2 {
 		text-align: center;
 		margin: 10px 0;
+		color: black;
 	}
 }
 

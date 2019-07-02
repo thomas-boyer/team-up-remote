@@ -37,6 +37,7 @@ const FileInfo = ({ file, userEmail, socket }) =>
       </nav>
       </div>
 
+      <div className="wrap">
       <div className="file-info">
         <h1>{ file.file_name }</h1>
 
@@ -45,6 +46,7 @@ const FileInfo = ({ file, userEmail, socket }) =>
           <h2>Upload completing</h2>
           { getChunks(file) }
         </div>
+      </div>
       </div>
     </div>
   )

@@ -49,11 +49,20 @@
 /*progress bar page*/
 .chunk {
   margin-bottom: 5px;
-  padding: 3px;
+  padding: 1rem;
   border: 2px solid black;
-  color: black; }
-  .chunk:last-child {
-    border-bottom: none; }
+  color: black;
+  margin-bottom: 20px; }
+
+.progress {
+  height: 30px;
+  border-radius: 0; }
+
+.progress-bar {
+  -webkit-animation: progress-bar-stripes 500ms linear infinite;
+  -o-animation: progress-bar-stripes 500ms linear infinite;
+  animation: progress-bar-stripes 500ms linear infinite;
+  background-size: 60px 60px; }
 
 /*home page*/
 .home-download {

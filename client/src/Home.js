@@ -28,11 +28,13 @@ const Home = () =>
   </nav>
   </div>
 
+
   <div className="background">
 
   <div className="home-download">
+    <h1>Team Up</h1>
     <h4>Download files <i>faster</i></h4>
-    <a className="download"type="submit" href="" download="teamup.exe">Download</a>
+    <a className="download" href="./teamup.exe" download="teamup.exe">Download</a>
   </div>
 
 </div>

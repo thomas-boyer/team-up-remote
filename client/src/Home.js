@@ -4,47 +4,42 @@ import React from 'react';
 const Home = () =>
 {
   return (
+<div className="home">
 
-<div>
-    <div>
-    	<nav className="jumbotron">
-    	<div className="theNav">
-	      <h1 className="display-4">Team Up!</h1>
-	      <p className="lead">
-	      	Get files <i>faster</i>
-	      </p>
-	      	<div><hr className="my-4"></hr></div>
-	      <p>A blahablah app that does neat thing take your files and go places feel good wow hooray</p>
-        <a type="button" className="btn p-2 bd-highlight btn-primary btn-lg " href="" download="teamup.exe" >
-        	Download
-        </a>
-      </div>
-    	</nav>
+  <div>
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <a className="navbar-brand" href="#">Team Up</a>
+    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span className="navbar-toggler-icon"></span>
+    </button>
+    <div className="collapse navbar-collapse" id="navbarNav">
+      <ul className="navbar-nav">
+        <li className="nav-item active">
+          <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link" href="#">Upload</a>
+        </li>
+        <li className="nav-item">
+          <a className="nav-link" href="#">Download</a>
+        </li>
+      </ul>
     </div>
+  </nav>
+  </div>
 
-     <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
-        <div className="carousel-inner">
-          <div className="carousel-item active">
-            <img src="../public/images/code-background.jpg" className="d-block w-100" alt="..." />
-          </div>
-          <div className="carousel-item">
-            <img src="..." className="d-block w-100" alt="..." />
-          </div>
-          <div className="carousel-item">
-            <img src="..." className="d-block w-100" alt="..." />
-          </div>
-        </div>
-        <a className="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span className="sr-only">Previous</span>
-        </a>
-        <a className="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-          <span className="carousel-control-next-icon" aria-hidden="true"></span>
-          <span className="sr-only">Next</span>
-        </a>
-      </div>
+
+  <div className="background">
+
+  <div className="home-download">
+    <h1>Team Up</h1>
+    <h4>Download files <i>faster</i></h4>
+    <a className="download" href="./teamup.exe" download="teamup.exe">Download</a>
+  </div>
+
 </div>
 
+</div>
 
   )
 }

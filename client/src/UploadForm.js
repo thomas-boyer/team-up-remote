@@ -60,8 +60,8 @@ const UploadForm = ({ file, email, socket, updateFile }) =>
   {
     return (
       <form classname="choose-form" onSubmit={ startUpload } encType="multipart/form-data">
-        <input className="choose-file" name="chunk" type="file" />
-        <input className="submit-file" type="submit" />
+        <input className="choose-file" name="chunk" type="file"/>
+        <input className="submit-file" type="submit"/>
       </form>
     )
   }

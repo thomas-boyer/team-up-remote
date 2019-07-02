@@ -1,16 +1,24 @@
 #root {
   font-family: 'Raleway', sans-serif; }
 
-/*h1 {
-	font-weight: 800;
-}*/
+h1 {
+  font-weight: 800; }
+
 /*please enter email page*/
 .email-form {
   padding: 35vh 20%;
   text-align: center;
   color: black;
-  font-family: 'Raleway', sans-serif; }
+  font-family: 'Raleway', sans-serif;
+  height: 100%;
+  width: 100%;
+  color: #ffffff;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url(../images/background4.jpg); }
   .email-form h1 {
+    color: black;
     margin-bottom: 20px; }
   .email-form form {
     display: -webkit-box;
@@ -89,13 +97,15 @@
   margin-right: 10px; }
 
 /*home page*/
+.home {
+  text-align: center;
+  height: 100vh; }
+
 .home-download {
   padding: 35vh 20%;
   text-align: center;
   color: black;
   font-family: 'Raleway', sans-serif;
-  height: 40px;
-  width: 20%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -116,15 +126,14 @@
   .nav .nav-link.active {
     font-size: 1.3rem; }
 
-.home.background {
-  background-image: url("images/code-background.jpg");
-  height: 100%;
+.home .background {
+  height: 100vh;
   width: 100%;
   color: #ffffff;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background-image: url(images/gradient2.jpg); }
+  background-image: url(../images/background.jpg); }
 
 /*file finished page*/
 .done-file {

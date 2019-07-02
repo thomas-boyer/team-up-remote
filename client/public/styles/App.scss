@@ -79,6 +79,35 @@
   background-size: 60px 60px;
 }
 
+.choose-form{
+
+	.submit-file {
+height: 40px;
+		width: 20%;
+	}
+
+}
+
+
+	.choose-file {
+	border: 2px solid black;
+	color: black;
+	font-family: 'Raleway', sans-serif;
+	padding: 35vh 20%;
+	text-align: center;
+	color: black;
+	font-family: 'Raleway', sans-serif;
+	display: flex;
+	justify-content: center;
+	font-weight: 800;
+	height: 40px;
+	width: 72%;
+	padding: 10px;
+	margin-right: 10px;
+
+	}
+
+
 
 /*home page*/
 
@@ -110,8 +139,15 @@
 	}
 }
 
-.home {
-	background-image: url("./images/code-background.jpg");
+.home.background {
+	background-image: url("images/code-background.jpg");
+	height: 100%;
+  width: 100%; 
+  color: #ffffff;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url(images/gradient2.jpg);
 }
 
 /*file finished page*/
@@ -123,11 +159,11 @@
 }
 
 .download-file {
-			border: 2px solid black;
-		color: black;
-		font-family: 'Raleway', sans-serif;
-				height: 40px;
-		width: 20%;
+	border: 2px solid black;
+	color: black;
+	font-family: 'Raleway', sans-serif;
+	height: 40px;
+	width: 20%;
 }
 
 	.download-file:hover {

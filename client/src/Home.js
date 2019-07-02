@@ -5,6 +5,7 @@ const Home = () =>
 {
   return (
 <div className="home">
+  <div className="background">
   <div>
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
     <a className="navbar-brand" href="#">Team Up</a>
@@ -31,6 +32,8 @@ const Home = () =>
     <h4>Download files <i>faster</i></h4>
     <a className="download"type="submit" href="" download="teamup.exe">Download</a>
   </div>
+
+</div>
 
 </div>
 

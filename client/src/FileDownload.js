@@ -20,9 +20,9 @@ const FileDownload = ({ file }) =>
   }
 
   return (
-    <div>
+    <div className="done-file">
       <h1>File Finished</h1>
-      <button onClick={ () => download(file) }>Download File</button>
+      <button className="download-file" onClick={ () => download(file) }>Download File</button>
     </div>
     )
 }

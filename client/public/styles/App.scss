@@ -57,11 +57,14 @@
 	}
 }
 
+/*progress bar page*/
 
 .chunk {
 	margin-bottom: 5px;
 	padding: 3px;
-	box-shadow: 8px 8px 8px #aaa;
+			border: 2px solid black;
+		color: black;
+
 	&:last-child {
 		border-bottom: none;
 	}
@@ -77,7 +80,16 @@
 	font-family: 'Raleway', sans-serif;
 	height: 40px;
 	width: 20%;
+			display: flex;
+		justify-content: center;
+		font-weight: 800;
 }
+
+	.download{
+		border: 2px solid black;
+		color: black;
+		font-family: 'Raleway', sans-serif;
+	}
 
 
 .nav {
@@ -92,6 +104,32 @@
 .home {
 	background-image: url("./images/code-background.jpg");
 }
+
+/*file finished page*/
+.done-file {
+	padding: 35vh 20%;
+	text-align: center;
+	color: black;
+	font-family: 'Raleway', sans-serif;
+}
+
+.download-file {
+			border: 2px solid black;
+		color: black;
+		font-family: 'Raleway', sans-serif;
+				height: 40px;
+		width: 20%;
+}
+
+	.download-file:hover {
+		background-color: #eedbaa;
+		cursor: pointer;
+	}
+
+
+
+
+
 
 
 

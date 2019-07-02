@@ -19,7 +19,7 @@ const FileInfo = ({ file, userEmail, socket }) =>
 
       <div>
         <ProgressBar data={ file }/>
-        <h2>Upload not yet complete</h2>
+        <h2>Upload completing</h2>
         { getChunks(file) }
       </div>
     </div>

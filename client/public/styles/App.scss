@@ -105,24 +105,9 @@ EmailForm {
 }
 
 .choose-form{
-
-	.submit-file {
-		height: 40px;
-		width: 20%;
-		background-color: white;
-	}
-
-}
-
-.choose-file {
-	border: 2px solid black;
-	color: black;
-	background-color: white;
-	font-family: 'Raleway', sans-serif;
-	padding: 35vh 20%;
 	text-align: center;
 	color: black;
-	font-family: 'Raleway', sans-serif;
+
 	display: flex;
 	justify-content: center;
 	font-weight: 800;
@@ -130,6 +115,24 @@ EmailForm {
 	width: 72%;
 	padding: 10px;
 	margin-right: 10px;
+
+}
+
+	.submit-file {
+			font-family: 'Raleway', sans-serif;
+		height: 40px;
+		width: 20%;
+		background-color: white;
+		border: 2px solid black;
+		margin-left: 10px;
+	}
+
+.choose-file {
+	height: 40px;
+	color: black;
+	background-color: white;
+	font-family: 'Raleway', sans-serif;
+	border: 2px solid black;
 }
 
 
@@ -193,6 +196,13 @@ EmailForm {
 	text-align: center;
 	color: black;
 	font-family: 'Raleway', sans-serif;
+	height: 100vh;
+  width: 100%;
+  color: #ffffff;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url(../images/background.jpg);
 }
 
 .download-file {

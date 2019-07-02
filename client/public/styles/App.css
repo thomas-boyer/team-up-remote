@@ -46,7 +46,7 @@ h1 {
 
 /*==============================*/
 /*progress bar page*/
-.wrap {
+.chunk-gradient {
   height: 100vh;
   width: 100%;
   color: #ffffff;
@@ -94,9 +94,7 @@ h1 {
   justify-content: center;
   font-weight: 800;
   height: 40px;
-  width: 72%;
-  padding: 10px;
-  margin-right: 10px; }
+  padding: 10px; }
 
 .submit-file {
   font-family: 'Raleway', sans-serif;
@@ -108,6 +106,16 @@ h1 {
 
 .choose-file {
   height: 40px;
+  width: 20%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   color: black;
   background-color: white;
   font-family: 'Raleway', sans-serif;

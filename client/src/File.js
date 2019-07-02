@@ -71,7 +71,7 @@ class File extends Component
         if (!this.state.file.done)
         {
           return (
-            <div>
+            <div className="chunk-gradient">
               <FileInfo file={ this.state.file }
                         userEmail={ this.state.email }
                         socket={ this.socket }/>

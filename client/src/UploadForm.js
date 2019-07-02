@@ -59,7 +59,7 @@ const UploadForm = ({ file, email, socket, updateFile }) =>
   if (assignedChunk.amount_uploaded === 0)
   {
     return (
-      <form classname="choose-form" onSubmit={ startUpload } encType="multipart/form-data">
+      <form className="choose-form" onSubmit={ startUpload } encType="multipart/form-data">
         <input className="choose-file" name="chunk" type="file"/>
         <input className="submit-file" type="submit"/>
       </form>

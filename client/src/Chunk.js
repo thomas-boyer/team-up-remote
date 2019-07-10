@@ -15,6 +15,10 @@ const Chunk = ({ chunk, calculateProgress }) =>
         chunk.amount_uploaded > 0 &&
         <ProgressBar data={ chunk }/>
       }
+      {
+        chunk.done &&
+        <h4>Done!</h4>
+      }
     </div>
   )
 }

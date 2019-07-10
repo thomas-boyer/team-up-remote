@@ -172,7 +172,7 @@ MongoClient.connect(MONGODB_URI, (err, db) =>
           const chunkArray = JSON.parse(req.body.chunks);
           const file = req.body;
           file.chunks = chunkArray;
-    file.done = false;
+          file.done = false;
 
           //Make corresponding directory in ./files folder
           mkdirp(`./files/${req.body.id}`, function (err)
@@ -181,7 +181,7 @@ MongoClient.connect(MONGODB_URI, (err, db) =>
             });
 
           teamUp.insertOne(file);
-    res.sendStatus(200);
+          res.sendStatus(200);
         });
 
       app.get('*', (req, res) =>
@@ -189,13 +189,13 @@ MongoClient.connect(MONGODB_URI, (err, db) =>
           res.sendFile('build/index.html', { root: 'client' });
         })
 
-  app.options('*', (req, res) =>
-      {
-        res.set({
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE'
-        });
+      app.options('*', (req, res) =>
+        {
+          res.set({
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE'
+          });
 
-        res.send();
-      })
+          res.send();
+        })
   });

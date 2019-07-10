@@ -23,6 +23,7 @@ class File extends Component
     };
 
   this.SOCKET = new WebSocket('ws://172.105.10.189');
+  }
 
   updateState = (stateChange) =>
   {

@@ -5,11 +5,13 @@ import fileDownload from 'js-file-download';
 
 const FileDownload = ({ file }) =>
 {
+  const ref = React.createRef();
+
   const download = (file) =>
   {
     //Set Response Type header to arraybuffer (instead of blob default)
     //in order to avoid downloaded data being mutated
-    axios.get(`http://localhost:8081/${file.id}/download/${file.file_name}`,
+    axios.get(`http://172.105.10.189/${file.id}/download/${file.file_name}`,
       {
         responseType: 'arraybuffer'
       })
@@ -17,6 +19,11 @@ const FileDownload = ({ file }) =>
       {
         fileDownload(response.data, file.file_name);
       });
+
+    const node = document.createElement("h3");
+    const text = document.createTextNode("Your file is downloading. This may take several minutes...");
+    node.appendChild(text);
+    document.getElementById("download").appendChild(node);
   }
 
   return (
@@ -43,7 +50,7 @@ const FileDownload = ({ file }) =>
     </nav>
     </div>
 
-    <div className="done-file">
+    <div className="done-file" id="download">
       <h1>File Finished</h1>
       <button className="download-file" onClick={ () => download(file) }>Download File</button>
     </div>

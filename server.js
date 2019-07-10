@@ -1,5 +1,4 @@
-const PORT = process.env.PORT || 8081;
-
+const PORT = process.env.PORT || 8088;
 //Import dependencies
 const express = require('express');
 const cors = require('cors');
@@ -10,7 +9,8 @@ const splitFile = require('split-file');
 
 //Use middleware
 const app = express();
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors());
+app.options('*', cors());
 app.use(express.json({ limit: '100gb' }));
 app.use(express.urlencoded({ extended: false }));
 app.use(fileUpload());
@@ -28,6 +28,8 @@ const wss = new SocketServer({ server: app.listen(
 
 app.use(express.static(path.join(__dirname, 'client', 'build')));
 
+app.options('*', cors());
+
 //Connect to database before doing anything else
 MongoClient.connect(MONGODB_URI, (err, db) =>
   {
@@ -44,7 +46,6 @@ MongoClient.connect(MONGODB_URI, (err, db) =>
       {
         console.log("User connected");
         ws.files = [];
-
         ws.on('message', (data) =>
         {
           const dataObj = JSON.parse(data);
@@ -99,13 +100,12 @@ MongoClient.connect(MONGODB_URI, (err, db) =>
       app.post('/:fileID', (req, res) =>
         {
           //Get path from key representing file
-          const path = Object.keys(req.files)[0];
+          const userPath = Object.keys(req.files)[0];
 
           const email = req.body.email;
-          const chunk = req.files[path];
-
+          const userChunk = req.files[userPath];
           //Move chunk to appropriate directory (which is created in '/' post handler)
-          chunk.mv(`./files/${path}/${chunk.name}`, (err) =>
+          userChunk.mv(`./files/${userPath}/${userChunk.name}`, (err) =>
             {
               if (err) console.log(err);
               else
@@ -113,12 +113,12 @@ MongoClient.connect(MONGODB_URI, (err, db) =>
                 let response = {};
 
                 //After moving, tell database and user that chunk is finished
-                teamUp.findOne({ id: path }, (err, file) =>
+                teamUp.findOne({ id: userPath }, (err, file) =>
                   {
                     const chunkIndex = file.chunks.findIndex( (chunk) => { return chunk.email === email });
                     let newValue = { $set: { [`chunks.${chunkIndex}.done`] : true } };
 
-                    teamUp.updateOne({ id: path }, newValue, () =>
+                    teamUp.updateOne({ id: userPath }, newValue, () =>
                       {
                         response.chunkDone = true;
                         file.chunks[chunkIndex].done = true;
@@ -126,7 +126,7 @@ MongoClient.connect(MONGODB_URI, (err, db) =>
                         //After marking chunk as done, check if every chunk is done
                         if (file.chunks.every( (chunk) => { return chunk.done }))
                         {
-                          const paths = file.chunks.map( (chunk) => { return chunk.path });
+                          const paths = file.chunks.map( (chunk) => { return `${__dirname}/files/${file.id}/${path.parse(chunk.path).base}`});
 
                           splitFile.mergeFiles(paths, __dirname + `/files/${file.id}/${file.file_name}`)
                             .then(() => {
@@ -138,7 +138,7 @@ MongoClient.connect(MONGODB_URI, (err, db) =>
 
                           //If so, mark file as done
                           newValue = { $set: { ["done"] : true } };
-                          teamUp.updateOne({ id: path }, newValue);
+                          teamUp.updateOne({ id: userPath }, newValue);
 
                           response.fileDone = true;
                         }
@@ -172,6 +172,7 @@ MongoClient.connect(MONGODB_URI, (err, db) =>
           const chunkArray = JSON.parse(req.body.chunks);
           const file = req.body;
           file.chunks = chunkArray;
+          file.done = false;
 
           //Make corresponding directory in ./files folder
           mkdirp(`./files/${req.body.id}`, function (err)
@@ -180,11 +181,21 @@ MongoClient.connect(MONGODB_URI, (err, db) =>
             });
 
           teamUp.insertOne(file);
+          res.sendStatus(200);
         });
 
       app.get('*', (req, res) =>
         {
           res.sendFile('build/index.html', { root: 'client' });
         })
-  });
 
+      app.options('*', (req, res) =>
+        {
+          res.set({
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE'
+          });
+
+          res.send();
+        })
+  });

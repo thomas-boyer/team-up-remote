@@ -33,8 +33,8 @@ const Home = () =>
 
   <div className="home-download">
     <h1>Team Up</h1>
-    <h4>Download files <i>faster</i></h4>
-    <a className="download" href="./teamup.exe" download="teamup.exe">Download</a>
+    <h4>Upload files <i>faster</i></h4>
+    <a className="download" href="./teamup.zip" download="teamup.exe">Download</a>
   </div>
 
 </div>

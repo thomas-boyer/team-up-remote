@@ -7,6 +7,12 @@ This is half of the Team Up project. The other half--the local server--can be fo
 
 Team Up is a combination of software that allows teams to upload files faster.
 
+## Pix
+
+!["Homepage"](https://github.com/thomas-boyer/team-up-remote/blob/master/docs/team-up-1.png)
+!["Email verification"](https://github.com/thomas-boyer/team-up-remote/blob/master/docs/team-up-2.png)
+!["File info"](https://github.com/thomas-boyer/team-up-remote/blob/master/docs/team-up-3.png)
+
 ## How it works
 
 - A team member--the **sharer**-- has a large file that needs to be uploaded to the Internet.
